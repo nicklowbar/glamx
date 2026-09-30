@@ -1,6 +1,8 @@
 //! Eigendecomposition for symmetric 2x2 matrices.
 //!
 //! Adapted from <https://github.com/Jondolf/barry/tree/main/src/math/eigen>
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 use glam::Vec2Swizzles;
 
@@ -57,7 +59,7 @@ macro_rules! impl_symmetric_eigen2 {
                 // The eigenvalues are the roots of the quadratic equation:
                 // ax^2 + bx + c = 0
                 // x = (-b +/- sqrt(b^2 - 4ac)) / 2a
-                let sqrt_part = (b.powi(2) - 4.0 * a * c).sqrt();
+                let sqrt_part = (b.d_powi(2) - 4.0 * a * c).sqrt();
                 let eigen1 = (-b + sqrt_part) / (2.0 * a);
                 let eigen2 = (-b - sqrt_part) / (2.0 * a);
                 <$Vec2>::new(eigen1, eigen2)

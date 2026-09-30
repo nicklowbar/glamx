@@ -92,6 +92,7 @@ isize = ["glam/isize"]
 usize = ["glam/usize"]
 
 [dependencies]
+libm = "0.2"
 glam = { version = "0.33.7", default-features = false }
 simba = { version = "0.10", default-features = false }
 num-traits = { version = "0.2", default-features = false, features = ["libm"] }

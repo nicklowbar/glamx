@@ -1,4 +1,6 @@
 //! 2D pose types for rigid body transformations.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 #[cfg(feature = "f64")]
 use crate::rot2::DRot2;

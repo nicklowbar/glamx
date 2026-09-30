@@ -123,3 +123,5 @@ pub mod prelude {
     pub use crate::svd3::DSvd3;
     pub use crate::svd3::{Svd3, Svd3A};
 }
+
+mod detmath;

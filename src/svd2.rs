@@ -1,4 +1,6 @@
 //! SVD decomposition for 2x2 matrices.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 #[cfg(not(feature = "std"))]
 use simba::scalar::{ComplexField, RealField};
@@ -50,16 +52,16 @@ macro_rules! impl_svd2 {
                 let sy_sign: $Real = if sy < 0.0 { -1.0 } else { 1.0 };
                 let singular_values = <$Vec2>::new(sx, sy * sy_sign);
 
-                let a2 = h.atan2(e);
+                let a2 = h.d_atan2(e);
                 // When r ≈ 0 (pure rotation case), a1 is arbitrary. Set a1 = a2
                 // so that theta = 0 and phi = a2 (the rotation angle).
-                let a1 = if r < 1e-10 { a2 } else { g.atan2(f) };
+                let a1 = if r < 1e-10 { a2 } else { g.d_atan2(f) };
                 let theta = (a2 - a1) * 0.5;
                 let phi = (a2 + a1) * 0.5;
-                let st = theta.sin();
-                let ct = theta.cos();
-                let sp = phi.sin();
-                let cp = phi.cos();
+                let st = theta.d_sin();
+                let ct = theta.d_cos();
+                let sp = phi.d_sin();
+                let cp = phi.d_cos();
 
                 let u = <$Mat2>::from_cols(<$Vec2>::new(cp, sp), <$Vec2>::new(-sp, cp));
                 let vt = <$Mat2>::from_cols(

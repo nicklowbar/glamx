@@ -1,0 +1,4 @@
+# Direct math calls in src/ that stay native, each with the reason it is platform-independent.
+# Every other transcendental call goes through src/detmath.rs. Format:
+#   src/<path>: <exact trimmed line>  # <reason>
+src/pose2.rs: let (sin, cos) = (self.rotation.sin(), self.rotation.cos());  # Rot2 accessors returning stored components, no trigonometry

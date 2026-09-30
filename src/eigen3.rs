@@ -7,6 +7,8 @@
 //! Adapted from <https://github.com/Jondolf/barry/tree/main/src/math/eigen>
 
 #![allow(clippy::manual_swap)] // Needed for spirv compatibility.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 use glam::Vec3Swizzles;
 use num_traits::float::FloatConst;
@@ -61,7 +63,7 @@ macro_rules! impl_symmetric_eigen3 {
             ///
             /// Reference: <https://en.wikipedia.org/wiki/Eigenvalue_algorithm#3%C3%973_matrices>
             pub fn eigenvalues(mat: $Mat3) -> $Vec3 {
-                let p1 = mat.y_axis.x.powi(2) + mat.z_axis.x.powi(2) + mat.z_axis.y.powi(2);
+                let p1 = mat.y_axis.x.d_powi(2) + mat.z_axis.x.d_powi(2) + mat.z_axis.y.d_powi(2);
                 if p1 == 0.0 {
                     // The matrix is diagonal.
                     let mut eigenvalues = [mat.x_axis.x, mat.y_axis.y, mat.z_axis.z];
@@ -74,9 +76,9 @@ macro_rules! impl_symmetric_eigen3 {
                     <$Vec3>::from_array(eigenvalues)
                 } else {
                     let q = (mat.x_axis.x + mat.y_axis.y + mat.z_axis.z) / 3.0;
-                    let p2 = (mat.x_axis.x - q).powi(2)
-                        + (mat.y_axis.y - q).powi(2)
-                        + (mat.z_axis.z - q).powi(2)
+                    let p2 = (mat.x_axis.x - q).d_powi(2)
+                        + (mat.y_axis.y - q).d_powi(2)
+                        + (mat.z_axis.z - q).d_powi(2)
                         + 2.0 * p1;
 
                     let p = (p2 / 6.0).sqrt();
@@ -98,12 +100,12 @@ macro_rules! impl_symmetric_eigen3 {
                     } else if r >= 1.0 {
                         0.0
                     } else {
-                        r.acos() / 3.0
+                        r.d_acos() / 3.0
                     };
 
                     // The eigenvalues satisfy eigen3 <= eigen2 <= eigen1
-                    let eigen1 = q + 2.0 * p * phi.cos();
-                    let eigen3 = q + 2.0 * p * (phi + 2.0 * pi / 3.0).cos();
+                    let eigen1 = q + 2.0 * p * phi.d_cos();
+                    let eigen3 = q + 2.0 * p * (phi + 2.0 * pi / 3.0).d_cos();
                     let eigen2 = 3.0 * q - eigen1 - eigen3; // trace(mat) = eigen1 + eigen2 + eigen3
                     <$Vec3>::new(eigen3, eigen2, eigen1)
                 }
